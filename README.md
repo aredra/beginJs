@@ -1,2 +1,0 @@
-# beginJs
-Created with CodeSandbox
