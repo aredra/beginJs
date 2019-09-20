@@ -111,4 +111,36 @@ arr.push({namn: 'chickens'});
 
 console.log(arr);
 
+function Animal (type, name, sound) {
+  this.type = type;
+  this.name = name;
+  this.sound = sound;
+}
+
+Animal.prototype.say = function() {
+  console.log(this.sound);
+}
  
+const ddog = new Animal('dog', 'ddoggy', 'walwal');
+
+ddog.say();
+
+class animalType {
+  constructor (type, name, sound) {
+    this.type = type;
+    this.name = name;
+    this.sound = sound;
+  }
+  say() {
+    console.log(this.sound);
+  }
+}
+
+class dogClass extends animalType {
+  constructor(name, sound) {
+    super('허스키', name, sound);
+  }
+}
+
+const huskyDog = new dogClass('gigigi', 'walwlawlalsld');
+huskyDog.say();
