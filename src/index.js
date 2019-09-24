@@ -1,6 +1,6 @@
-const isAnimal = (text) => ['cat', 'dog', 'bird'].includes(text);
+const isAnimal = text => ["cat", "dog", "bird"].includes(text);
 
-console.log(isAnimal('dog'));
+console.log(isAnimal("dog"));
 
 function getSound(animal) {
   // if (animal === 'cat') return 'ccc';
@@ -15,43 +15,43 @@ function getSound(animal) {
   // return sounds[animal] || '....?';
   const tasks = {
     dog: () => {
-      console.log('ddd');
+      console.log("ddd");
     },
     cat() {
-      console.log('ccc');
+      console.log("ccc");
     },
     bird: function() {
-      console.log('bbb');
+      console.log("bbb");
     }
-  }
+  };
   const task = tasks[animal];
   if (!task) {
-    console.log('....?');
+    console.log("....?");
     return;
   }
   task();
 }
-getSound('cat');
-getSound('dev');
+getSound("cat");
+getSound("dev");
 
 const add = (a, b) => {
-  return a+b;
-}
+  return a + b;
+};
 
-const hello = (str) => console.log(`Hello, ${str}!`);
-hello('dev1');
+const hello = str => console.log(`Hello, ${str}!`);
+hello("dev1");
 
 const sum = add(1, 4);
 console.log(sum);
 
 const dog = {
-  _name: '시베리안허스키',
-  sound: '멍멍!',
+  _name: "시베리안허스키",
+  sound: "멍멍!",
   say: function() {
     console.log(this.sound);
   },
   set name(value) {
-    console.log('dog name is changing!');
+    console.log("dog name is changing!");
     this._name = value;
   },
   get name() {
@@ -60,8 +60,8 @@ const dog = {
 };
 
 const cat = {
-  name: '페르시안',
-  sound: '야옹!'
+  name: "페르시안",
+  sound: "야옹!"
 };
 
 cat.say = dog.say;
@@ -73,7 +73,7 @@ const numbers = {
   _b: 2,
   sum: 3,
   calculate() {
-    console.log('calculate');
+    console.log("calculate");
     this.sum = this._a + this._b;
   },
   get a() {
@@ -90,28 +90,25 @@ const numbers = {
     this._b = value;
     this.calculate();
   }
-}
+};
 
 console.log(numbers.sum);
 numbers.b = 5;
 console.log(numbers.sum);
 console.log(dog.name);
-dog.name = '포메라니안';
+dog.name = "포메라니안";
 console.log(dog.name);
 numbers.a = 5;
 numbers.b = 9;
 console.log(numbers.sum);
 
-const arr = [
-  {name: 'dogs'},
-  {name: 'cats'}
-]
+const arr = [{ name: "dogs" }, { name: "cats" }];
 
-arr.push({namn: 'chickens'});
+arr.push({ namn: "chickens" });
 
 console.log(arr);
 
-function Animal (type, name, sound) {
+function Animal(type, name, sound) {
   this.type = type;
   this.name = name;
   this.sound = sound;
@@ -119,14 +116,14 @@ function Animal (type, name, sound) {
 
 Animal.prototype.say = function() {
   console.log(this.sound);
-}
- 
-const ddog = new Animal('dog', 'ddoggy', 'walwal');
+};
+
+const ddog = new Animal("dog", "ddoggy", "walwal");
 
 ddog.say();
 
 class animalType {
-  constructor (type, name, sound) {
+  constructor(type, name, sound) {
     this.type = type;
     this.name = name;
     this.sound = sound;
@@ -138,9 +135,46 @@ class animalType {
 
 class dogClass extends animalType {
   constructor(name, sound) {
-    super('허스키', name, sound);
+    super("허스키", name, sound);
   }
 }
 
-const huskyDog = new dogClass('gigigi', 'walwlawlalsld');
+const huskyDog = new dogClass("gigigi", "walwlawlalsld");
 huskyDog.say();
+
+const slime = {
+  name: "슬라임"
+};
+
+const cuteSlime = {
+  ...slime,
+  attribute: "cute"
+};
+
+const purpleCuteSlime = {
+  ...cuteSlime,
+  color: "purple"
+};
+
+console.log(slime);
+console.log(cuteSlime);
+console.log(purpleCuteSlime);
+
+const numbersss = [1, 2, 3, 4, 5];
+
+const spreadNumbers = [...numbersss, 1000, ...numbersss];
+console.log(spreadNumbers);
+
+const purCuteSlime = {
+  name: "슬라임",
+  attribue: "cute",
+  color: "purple"
+};
+
+const { color, ...rest } = purCuteSlime;
+console.log(color);
+console.log(rest);
+
+const num = [0, 123, 54, 4, 5, 3, 5];
+const [one, ...restt] = num;
+console.log(restt);
