@@ -178,3 +178,20 @@ console.log(rest);
 const num = [0, 123, 54, 4, 5, 3, 5];
 const [one, ...restt] = num;
 console.log(restt);
+
+//function params ...rest
+function superSum(...params) {
+  return params.reduce((acc, curr) => acc + curr, 0);
+}
+
+console.log(superSum(1, 2, 3, 4));
+
+// function에 params function 사용에 넣어지는 parmas는 인자
+console.log(superSum(...num));
+
+function max(...rest) {
+  return rest.reduce((acc, curr) => (acc < curr ? curr : acc), 0);
+}
+
+const result = max(1, 2, 3, 4, 10, 5, 6, 7);
+console.log(result);
