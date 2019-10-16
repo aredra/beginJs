@@ -195,3 +195,68 @@ function max(...rest) {
 
 const result = max(1, 2, 3, 4, 10, 5, 6, 7);
 console.log(result);
+
+function work(callback) {
+  setTimeout(() => {
+    const start = Date.now();
+    for (let i = 0; i < 1000000000; i++) {}
+    const end = Date.now();
+    console.log(end - start + "ms");
+    callback(end - start);
+  }, 0);
+}
+
+console.log("work1 start!");
+work(ms => {
+  console.log("work1 end!");
+  console.log(ms + "ms over!");
+});
+console.log("work2 start!");
+
+// function increaseAndPrint(n, callback) {
+//   setTimeout(() => {
+//     const increased = n+1;
+//     console.log(increased);
+//     if (callback) {
+//       callback(increased);
+//     }
+//   }, 1000);
+// }
+
+// increaseAndPrint(0, n => {
+//   increaseAndPrint(n, n => {
+//     increaseAndPrint(n, n => {
+//       increaseAndPrint(n, n => {
+//         increaseAndPrint(n, n => {
+//           console.log('work end');
+//         })
+//       })
+//     })
+//   })
+// });
+
+function increaseAndPrint2(n) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const value = n + 1;
+      if (value === 5) {
+        const error = new Error();
+        error.name = "ValueIsFive";
+        reject(error);
+        return;
+      }
+      console.log(value);
+      resolve(value);
+    }, 1000);
+  });
+}
+
+increaseAndPrint2(0)
+  .then(increaseAndPrint2)
+  .then(increaseAndPrint2)
+  .then(increaseAndPrint2)
+  .then(increaseAndPrint2)
+  .then(increaseAndPrint2)
+  .catch(e => {
+    console.error(e);
+  });
