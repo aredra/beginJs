@@ -77,3 +77,50 @@ function increaseAndPrint2(n) {
     });
 
     errorProcess();
+
+    const getDogName = async () => {
+      await sleep(1000);
+      return '허스키';
+    }
+
+    const getCatName = async () => {
+      await sleep(500);
+      return '향단이';
+    }
+    
+    const getDragonName = async () => {
+      await sleep(5000);
+      return '투쓸리스';
+    }
+    //순서대로 처리될까지 기다렸다가 순차적 진행
+    async function getName() {
+      const dogName = await getDogName(); 
+      console.log(dogName);
+      const catName = await getCatName();
+      console.log(catName);
+      const dragonName = await getDragonName();
+      console.log(dragonName);
+    }
+
+    //전체를 병렬 진행 가장 처리 속도가 늦은 함수가 전체 처리 속도;
+    async function getNameAll() {
+      const start = Date.now();
+      const nameAll = await Promise.all([getCatName(), getDogName(), getDragonName()]);
+  //    const [cat, dog, dragon] = await Promise.all([getCatName(), getDogName(), getDragonName()]);
+      console.log(Date.now() - start);
+      console.log(nameAll);
+    }
+
+    //가장 처리가 빠른 함수가 전체 처리 속도, 처리가 늦은 값에서 오류가 발생 시 체크하지 않음
+    async function getNameRace() {
+      try {
+        const nameRace = await Promise.race([getCatName(), getDogName(), getDragonName()]);
+        console.log(nameRace);
+      } catch (e) {
+        throw e;
+      }
+    }
+
+    getName();
+    getNameAll();
+    getNameRace();
