@@ -38,7 +38,40 @@ function hanoi(num, start, end, temp) {
   hanoi(num-1, temp, end, start);
 }
 
-console.log(hanoi(4, "A", "C", "B"));
-console.log(route);
+// console.log(hanoi(4, "A", "C", "B"));
+// console.log(route);
 
+function countNumber(start, end, num) {
+  let str = '';
+  let count = 0;
+  // 2n 과 n*n
+  for (let i=start; i<=end; i++) {
+    str += i;
+  }
+  
+  // console.log(str.match(/1/g).length);
 
+  for (let k of str) {    
+    if (Number(k) === num) count++;
+  }
+
+  return count;
+}
+
+function countAllNumber(start, end) {
+  const obj = {};
+
+  for (let i=start; i<=end; i++) {
+    let tmp = i;
+    while (tmp > 0) {
+      let num = tmp%10;
+      if (obj[num]) obj[num]++;
+      else obj[num] = 1;
+      tmp = Math.floor(tmp/10);
+    }
+  }
+
+  return obj;
+}
+
+console.log(countAllNumber(1, 99));
