@@ -74,4 +74,26 @@ function countAllNumber(start, end) {
   return obj;
 }
 
-console.log(countAllNumber(1, 99));
+// console.log(countAllNumber(1, 99));
+
+const complexStr = "aaaabbhhcccdddddfeff"
+
+function compressChar(str) {
+  let result = "";
+  let currChar = str[0];
+  let count = 1;
+
+  for (let i of str) {
+    if (currChar === i) {
+      count++;
+    } else {
+      result += currChar+count;
+      currChar = i;
+      count = 1;
+    }
+  }
+  result += currChar + count;
+  return result;
+}
+
+console.log(compressChar(complexStr));
