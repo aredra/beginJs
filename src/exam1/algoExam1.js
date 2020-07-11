@@ -1,3 +1,5 @@
+//가로 맞추기, 하노이의 탑, 정수 개수 세기, 문자열 압축,  특정 정수 적은 수로 나누기
+
 function mathBrackets(arr) {
     const param = arr.split("");
     console.log(param);
@@ -23,7 +25,7 @@ function mathBrackets(arr) {
 
 const arr = "(()(()))()";
 
-// console.log(mathBrackets(arr));
+console.log(mathBrackets(arr));
 
 const route = [];
 
@@ -38,8 +40,8 @@ function hanoi(num, start, end, temp) {
   hanoi(num-1, temp, end, start);
 }
 
-// console.log(hanoi(4, "A", "C", "B"));
-// console.log(route);
+console.log(hanoi(4, "A", "C", "B"));
+console.log(route);
 
 function countNumber(start, end, num) {
   let str = '';
@@ -49,7 +51,7 @@ function countNumber(start, end, num) {
     str += i;
   }
   
-  // console.log(str.match(/1/g).length);
+  console.log(str.match(/1/g).length);
 
   for (let k of str) {    
     if (Number(k) === num) count++;
@@ -74,7 +76,7 @@ function countAllNumber(start, end) {
   return obj;
 }
 
-// console.log(countAllNumber(1, 99));
+console.log(countAllNumber(1, 99));
 
 const complexStr = "aaaabbhhcccdddddfeff"
 
@@ -97,3 +99,23 @@ function compressChar(str) {
 }
 
 console.log(compressChar(complexStr));
+
+function countBy73(num) {
+  let temp = num
+  let result =0;
+  while(true) {
+    if(temp%7 == 0) {
+      result += parseInt(temp/7, 10);
+      break;
+    }
+    temp -= 3;
+    result +=1;
+    if (temp < 0) {
+      result = -1;
+      break;
+    }
+  }
+  return result;
+}
+
+console.log(countBy73(1));
