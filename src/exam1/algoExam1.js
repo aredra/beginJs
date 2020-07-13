@@ -1,4 +1,5 @@
-//가로 맞추기, 하노이의 탑, 정수 개수 세기, 문자열 압축,  특정 정수 적은 수로 나누기
+// 가로 맞추기, 하노이의 탑, 정수 개수 세기, 문자열 압축,  특정 정수 적은 수로 나누기
+// 블럭 탑 쌓기
 
 function mathBrackets(arr) {
     const param = arr.split("");
@@ -119,3 +120,37 @@ function countBy73(num) {
 }
 
 console.log(countBy73(1));
+
+const totalBlockArr = ["ABCDEF", "BCAD", "ADEFQRX", "BEDFG", "EFGHZ", "AFIHDB"];
+const blockRule = "ABD"
+
+function validBlockTop(blockArr, rule) {
+  let result = [];
+  const temp = rule.split("");
+
+  blockArr.some((el, idx) => {
+    let now = null;
+
+    temp.some(item => {
+      if(el.indexOf(item) > -1) {
+        if (now) {
+          if (now > el.indexOf(item)) {
+            now = -1;
+            return true;
+          } else {
+            now = el.indexOf(item);
+          }
+        } else {
+          now = el.indexOf(item);
+        }
+      }
+    })
+    console.log(now);
+    
+    result.push(now === -1 ? "불가능" : "가능");
+  })
+
+  return result;
+}
+
+console.log(validBlockTop(totalBlockArr, blockRule));
