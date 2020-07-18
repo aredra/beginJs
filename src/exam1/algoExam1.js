@@ -1,5 +1,5 @@
 // 가로 맞추기, 하노이의 탑, 정수 개수 세기, 문자열 압축,  특정 정수 적은 수로 나누기
-// 블럭 탑 쌓기
+// 블럭 탑 쌓기, 악수 횟수 구하기
 
 function mathBrackets(arr) {
     const param = arr.split("");
@@ -154,3 +154,23 @@ function validBlockTop(blockArr, rule) {
 }
 
 console.log(validBlockTop(totalBlockArr, blockRule));
+
+function peopleByClap(count) {
+  let person = 1;
+  let prevValue = 0;
+  let result = [];
+
+  while (true) {
+    let currValue = (person * (person - 1)) / 2;
+    if (count <= currValue ) {
+      result.push(count - prevValue, person);
+      break;
+    }
+    prevValue = currValue;
+    person += 1;
+  }
+
+  return result;
+}
+
+console.log(peopleByClap(59));
