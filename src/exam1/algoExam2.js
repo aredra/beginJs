@@ -29,3 +29,10 @@ function primeList(n) {
 }
 
 console.log(primeList(43));
+
+// const arr = [];
+// for (let i=0; i<100; i++) {
+//     arr.push(`${i+1}. 제가 돈이 ${i+1}원 부족하여 셔틀을 탈 수 없습니다.`);
+// }
+
+// console.log(arr);
