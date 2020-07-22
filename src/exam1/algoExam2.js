@@ -3,12 +3,8 @@ function primeList(n) {
     let sieve = [];
     for (let i = 0; i <  n+1; i++) {
         sieve.push(true);
-    }
-    const v = sieve;
-    console.log(v);
-    
+    }    
     let m = parseInt(n ** 0.5, 10);
-    console.log(n ** 0.5);
     
     for (let i = 2; i < m+1; i++) {
         if (sieve[i] === true) {
@@ -30,9 +26,21 @@ function primeList(n) {
 
 console.log(primeList(43));
 
-// const arr = [];
-// for (let i=0; i<100; i++) {
-//     arr.push(`${i+1}. 제가 돈이 ${i+1}원 부족하여 셔틀을 탈 수 없습니다.`);
-// }
+function goldbachFunction(n) {
+    let primeList = this.primeList(n);
+    let result = [];
 
-// console.log(arr);
+    for (let i=0; i < primeList.length/2; i++) {
+        const tmpVal = primeList[i]
+        if (primeList.includes(n - tmpVal)) {
+          result.push([tmpVal, n - tmpVal]);
+        }
+    }
+
+    const diff = result.map(v => v[1] - v[0]);
+    const idx = diff.indexOf(Math.min.apply(null, diff));
+
+    return result[idx];
+}
+
+console.log(goldbachFunction(100));
