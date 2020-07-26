@@ -1,4 +1,4 @@
-//에라토스테네스의 체, 골드바흐의 추측, matrix 연산가능 여부
+//에라토스테네스의 체, 골드바흐의 추측, matrix 연산가능 여부,DFS, BFS
 function primeList(n) {
     let sieve = [];
     for (let i = 0; i <  n+1; i++) {
@@ -67,5 +67,51 @@ function matrixSolution(a, b) {
     }
     return result.length ? result : "불가능한 연산입니다.";
 }
-
 console.log(matrixSolution(aMatrix, bMatrix));
+
+const graph = {
+    'A': ['E', 'C', 'B'],
+    'B': ['A'],
+    'C': ['A'],
+    'D': ['E', 'F'],
+    'E': ['D', 'A'],
+    'F': ['D'],
+}
+
+function dfs(graph, startNode) {
+    let visited = [];
+    let stack = [startNode];
+
+    while (stack.length) {
+        const tmp = stack.pop();
+        if (!visited.includes(tmp)) {
+            visited.push(tmp);
+            let sub = graph[tmp].filter(v => !visited.includes(v));
+            for (let i of sub) {
+                stack.push(i);
+            }
+        }
+    }
+
+    return visited;
+}
+console.log(dfs(graph, 'E'));
+
+function bfs(graph, startNode) {
+  let visited = [];
+  let queue = [startNode];
+
+  while (queue.length) {
+    const tmp = queue.shift();
+    if (!visited.includes(tmp)) {
+      visited.push(tmp);
+      let sub = graph[tmp].filter((v) => !visited.includes(v));
+      for (let i of sub) {
+        queue.push(i);
+      }
+    }
+  }
+
+  return visited;
+}
+console.log(bfs(graph, "E"));
