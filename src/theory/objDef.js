@@ -10,6 +10,36 @@ function validateCaracterCountWithArg(max) {
     return items.every((item) => item.length < max);
 }
 
+const count = {
+  get number() {
+    return this._num || 0;
+  },
+  set number(num) {
+    this._num = num;
+    console.log(num); // 이렇게 일괄적으로 디버깅 가능.
+    document.querySelector("#count").textContent = this._num;
+  },
+};
+
+const count2 = {};
+Object.defineProperty(count2, "number", {
+  get: function () {
+    return this._num || 0;
+  },
+  set: function (num) {
+    this._num = num;
+    console.log(this._num); // 이렇게 일괄적으로 디버깅 가능.
+    document.querySelector("#count").textContent = this._num; // 중복 제거
+  },
+});
+
+document.querySelector("#up").addEventListener("click", () => {
+  count.number++;
+});
+document.querySelector("#down").addEventListener("click", () => {
+  count.number--;
+});
+
 // Debouncing
 let timer;
 document.querySelector("#input").addEventListener("input", e => {

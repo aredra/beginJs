@@ -1,3 +1,15 @@
+function insertSort(arr) {
+    for (let i = 1; i < arr.length; i++) {
+        let tmp = arr[i];
+        let j = 0;
+        for (j = i-1; j >= 0 && tmp < arr[j]; j--) {
+            arr[j +1] = arr[j]
+        }
+        arr[j+1] = tmp;
+    }
+    return arr;
+}
+
 function bubbleSort(arr) {
     let result = arr.slice();
 
@@ -59,4 +71,4 @@ function quickSort(arr) {
 
 const arr = [1, 10, 2, 5, 2, 1, 8, 4];
 
-console.log(quickSort(arr));
+console.log(insertSort(arr));
