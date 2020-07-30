@@ -1,4 +1,5 @@
-//에라토스테네스의 체, 골드바흐의 추측, matrix 연산가능 여부,DFS, BFS
+// 에라토스테네스의 체, 골드바흐의 추측, matrix 연산가능 여부,DFS, BFS
+// 최단/최장 거리 탐색, 앨리스 369
 function primeList(n) {
     let sieve = [];
     for (let i = 0; i <  n+1; i++) {
@@ -115,3 +116,19 @@ function bfs(graph, startNode) {
   return visited;
 }
 console.log(bfs(graph, "E"));
+
+function alice369(param) {
+    let result = 0;
+    let count = 1;
+    const obj = {3: 1, 6: 2, 9: 3};
+
+    while(param.length) {
+        result += obj[param.pop()]*count;
+        count *= 3;
+    }
+
+    return result || '정확한 계산을 할 수 없습니다.';
+}
+
+const alice369Input = '36'.split('');
+console.log(alice369(alice369Input));
