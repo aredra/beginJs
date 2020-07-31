@@ -1,5 +1,5 @@
 // 에라토스테네스의 체, 골드바흐의 추측, matrix 연산가능 여부,DFS, BFS
-// 최단/최장 거리 탐색, 앨리스 369
+// 최단/최장 거리 탐색, 앨리스 369, 지뢰찾기, 연속된문자열 개수
 function primeList(n) {
     let sieve = [];
     for (let i = 0; i <  n+1; i++) {
@@ -129,6 +129,56 @@ function alice369(param) {
 
     return result || '정확한 계산을 할 수 없습니다.';
 }
-
 const alice369Input = '36'.split('');
 console.log(alice369(alice369Input));
+
+const searchArea = 4;
+const mineArea = [
+  [1, 0, 0, 1, 0],
+  [0, 1, 0, 1, 1],
+  [1, 0, 0, 1, 0],
+  [0, 0, 0, 0, 0],
+  [0, 0, 1, 0, 0],
+];
+
+function searchMaxMine(find, mineArea) {
+    const areaSize = mineArea.length;
+    let resultArr = [];
+
+    for (let xCnt = 0; xCnt <= areaSize-find; xCnt++) {
+        for (let yCnt= 0; yCnt <=areaSize-find; yCnt++) {
+            let value = 0;
+            for(let i = xCnt; i < xCnt+find; i++) {
+                for(let j = yCnt; j <yCnt+find; j++) {
+                    value += mineArea[i][j];
+                }
+            }
+            resultArr.push(value);
+            value = 0;
+        }
+    }
+
+    console.log(resultArr);
+    return Math.max.apply(null, resultArr);
+}
+console.log(searchMaxMine(searchArea, mineArea));
+
+function sequentialChar(str) {
+    let result = [];
+    for (let i = 1; i < str.length + 1; i++) {
+        for (let j = 0; j < i; j++) {
+            result.push(str.slice(j, j + str.length + 1 - i));
+        }
+    }
+    return result;
+}
+const inputStr1 = "ABIEFIIEFHS";
+const inputStr2 = "ABIEFEHIEIFISH";
+const arrStr1 = sequentialChar(inputStr1);
+const arrStr2 = sequentialChar(inputStr2);
+
+let inter = arrStr1.filter(v => arrStr2.includes(v));
+inter.sort((a, b) => {
+    return a.length - b.length;
+})
+console.log(inter.pop().length);
