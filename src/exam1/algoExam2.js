@@ -1,5 +1,5 @@
 // 에라토스테네스의 체, 골드바흐의 추측, matrix 연산가능 여부,DFS, BFS
-// 최단/최장 거리 탐색, 앨리스 369, 지뢰찾기, 연속된문자열 개수
+// 최단/최장 거리 탐색, 앨리스 369, 지뢰찾기, 연속된문자열 개수, 순환 리스트
 function primeList(n) {
     let sieve = [];
     for (let i = 0; i <  n+1; i++) {
@@ -182,3 +182,24 @@ inter.sort((a, b) => {
     return a.length - b.length;
 })
 console.log(inter.pop().length);
+
+function circleArr(totalCnt, passingUnit) {
+    let q =[];
+    let idx = 0;
+
+    for (let i = 0; i < totalCnt; i++) {
+        q.push(i+1);
+    }
+    while (q.length > passingUnit-1) {
+        if (idx > q.length - 1) {
+            idx -= q.length;
+        }
+        q.splice(idx, 1);
+        idx -= 1;
+        idx += passingUnit;
+    }
+
+    return q;
+}
+console.log(circleArr(7, 4));
+
