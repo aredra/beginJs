@@ -104,6 +104,88 @@ function moveCnt(list, goal) {
 }
 console.log(moveCnt(dishList, goal));
 
-function makeMap(row, col, char, trap) {
+function makeMap(row, col, char, trap, move) {
+    let areaMap =[];
+    let charCol = char[0]+1;
+    let charRow = char[1]+1;
+
+    for(let i = 0; i < col + 2; i++) {
+        areaMap.push(Array(row+2).fill(0));
+    }
+
+    for(let i in areaMap) {
+        for(let j in areaMap[0]) {
+            i = Number(i);
+            j = Number(j);
+            if (!i || !j || j === areaMap[0].length-1 || i === areaMap.length-1) {
+                areaMap[i][j] = 2;
+            }
+        }
+    }
+
+    areaMap[charCol][charRow] = 1;
     
+    for (let i of trap) {
+        if (areaMap[i[0]+1][i[1]+1] == 1) {
+            continue;
+        } else {
+            areaMap[i[0]+1][i[1]+1] = 3;
+        }
+    }
+    console.log(areaMap);
+
+    for(let i of move) {
+        areaMap[charCol][charRow] = 0;
+        switch (i) {
+          case 1:
+              console.log("상");
+              if (
+                areaMap[charCol - 1][charRow] == 0
+              ) {
+                  charCol -= 1;
+              }
+            break;
+          case 2:
+            console.log("하");
+            if (
+                areaMap[charCol + 1][charRow] == 0
+            ) {
+                charCol += 1;
+            }
+            break;
+          case 3:
+            console.log("좌");
+            if (
+                areaMap[charCol][charRow - 1] == 0
+            ) {
+                charCol -= 1;
+            }
+            break;
+          case 4:
+            console.log("우");
+            if (
+                areaMap[charCol][charRow + 1] == 0
+            ) {
+                charRow += 1;
+            }
+            break;
+          default:
+            break;
+        }
+    }
+    areaMap[charCol][charRow] = 1;
+    console.log(areaMap);
 }
+makeMap(
+  5,
+  4,
+  [0, 0],
+  [
+    [0, 1],
+    [1, 1],
+    [2, 3],
+    [1, 3],
+  ],
+  [2,2,2,4,4,4]
+);
+

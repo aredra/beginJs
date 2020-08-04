@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta name="robots" content="noindex">
+    <meta name="viewport" content="user-scalable=no, width=500, height=500">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="-1" />
+    <title>SK Happy Express 구성원 승인요청</title>
+    <style>
+        .grid-box {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            grid-template-rows: repeat(5, 1fr);
+            justify-items: center;
+            align-items: center;
+            padding: 5px;
+            width: 300px;
+            height: 300px;
+        }
+        .grid-top-text {
+            grid-column: 1/13;
+            grid-row: 1/2;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            justify-items: inherit;
+            align-items: inherit;
+            width: 100%;
+        }
+        .grid-textarea {
+            grid-column: 1/13;
+            grid-row: 2/5;
+            width: 90%; 
+            height: 90%;
+        }
+        .grid-bottom-btn {
+            grid-column: 2/5;
+            grid-row: 5/6; 
+            width: 100%;
+            height: 100%;
+        }
+        .grid-bottom-btn-group {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            justify-items: center;
+            align-items: center; 
+            height: 100%;
+        }
+        .grid-btn {
+            border-radius: 4px;
+            opacity: 0.6;
+            color: aliceblue;
+            border-width: 1px;
+            width: 80%;
+            text-align: center; 
+            height: 60%;
+            display: grid;
+            align-items: center;
+        }
+        .grid-btn:hover {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-box">
+        <div class="grid-top-text">
+            <label><input id="agree" type="radio" name="valid" value="true" onclick="checkRadioBtn('agree')">가입승인</label>
+            <label><input id="reject" type="radio" name="valid" value="false" onclick="checkRadioBtn('reject')">가입반려</label>
+        </div>
+        <textarea class="grid-textarea"></textarea>
+        <div class="grid-bottom-btn">
+            <div class="grid-bottom-btn-group">
+                <div id="sendValid" class="grid-btn" style="background-color: tomato;">발송</div>
+                <div id="closeValid" class="grid-btn" style="background-color: darkgray">취소</div>
+            </div>
+            <input type="hidden">
+        </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            let agreeObj = document.getElementById("agree");
+            agreeObj.checked = true;
+            console.log(agreeObj.value);
+
+            document.getElementById("sendValid").addEventListener("click", function() {
+                this.sendRequest();
+            });
+
+            let closeObj = document.getElementById("closeValid");
+            closeObj.addEventListener("click", function(e) { 
+                this.opener = this;
+                window.close();
+            });
+
+            let paramObj = getQuery();
+            let paramKeys = paramObj.keys();
+            for(let i = 0; i < paramKeys.length; i++){
+                document.getElementById(paramKeys[i]).value = paramObj[paramKeys[i]];
+            }
+            
+            let newWin = window.open("about:blank", "name", "width=300, height=300, resizable=no");
+            let certiform = document.certiForm;
+            certiform.action = "http://localhost:3000/"
+            certiform.target = "name";
+            certiform.submit();
+        });
+        
+        let agree = true;
+
+        function checkRadioBtn(param) {
+            agree = (param === "agree");
+            console.log(agree);
+        }
+
+        function getQuery(){ 
+            let url = document.location.href; 
+            let qs = url.substring(url.indexOf('?') + 1).split('&');
+            let result = {};
+            for(let i = 0; i < qs.length; i++) {
+                qs[i]=qs[i].split('=');
+                result[qs[i][0]] = decodeURIComponent(qs[i][1]);
+            }
+            return result;
+        }
+    </script>
+</body>
+</html>
