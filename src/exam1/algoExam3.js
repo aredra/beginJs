@@ -1,5 +1,5 @@
 // 순열과 조합, 깃발 주의 지뢰찾기, 소/중 괄호 매칭, 이상한 정수 카운트, 순환배열 낮은 점수 따라 이동하기
-// 지형 만들기, 
+// 지형 만들기, 키보드 망가짐!!
 
 function combination(charArr, n) {
     let combi = [];
@@ -189,3 +189,47 @@ makeMap(
   [2,2,2,4,4,4]
 );
 
+function keyboardHelper(payload) {
+    const people = payload.split('\n');
+    const detail = [];
+    const result = [];
+
+    for (let i of people) {
+        let j = i.split(',');
+        let k = j.slice(1, j.length-2);
+        detail.push(k);
+    }
+
+    let strArr = [];
+    for (let i of detail) {
+        strArr.push(i.join(''));
+    }
+
+    for (let i  of strArr) {
+        let first = "";
+        let second = "";
+        for (let j of i.trim()) {
+            if (j != '\'') {
+                if (j == 3) {
+                    first += '1';
+                    second += '2';
+                } else if (j == 4) {
+                    first += '2';
+                    second += '2';                  
+                } else if (j ==6) {
+                    first += '1';
+                    second += '5';                                    
+                } else {
+                    first += j;
+                    second += '0';              
+                }
+            }
+        }
+        result.push([Number(first), Number(second)]);
+    }
+    console.log(result);
+}
+
+keyboardHelper(`dummy, '333,356,766', 'dummy', 'dummy'
+dum, '5,000,000', 'dume', 'fuufie'
+asdf, '3,300,000', 'dief', 'efiieifif`);
