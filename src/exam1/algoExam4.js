@@ -1,4 +1,5 @@
-//페이징 FIFO, LRU, 행렬 돌리기
+// 재귀: 중복의 가능성이 있으며 - 탑다운, 메모라이제이션: 탑다운, DP: 중복을 안함 - bottom up 방식
+// 페이징 FIFO, LRU, 행렬 돌리기
 
 function pagingCount(page, size, noneTime, existTime) {
     let runtime = 0;
@@ -57,3 +58,31 @@ const mat = [
     [0,0,0,0],
 ]
 console.log(rotateMatrix(mat));
+
+function fivo(n) {
+    let answer = [];
+    answer[1] = 1;
+    answer[2] = 1;
+    for(let i=3; i < 8; i++) {
+        answer[i] = answer[i-2] + answer[i-1];
+    }
+
+    if (n === 1 || n === 2) {
+        return 1;
+    } else {
+        return fivo(n - 2) + fivo(n - 1);
+    }
+}
+
+function fact() {
+  let answer = 1;
+  for (let i = 1; i < 6; i++) {
+    answer *= i;
+  }
+
+  if (n < 2) {
+    return 1;
+  } else {
+    fact(n - 1) * n;
+  }
+}
