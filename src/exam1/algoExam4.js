@@ -1,5 +1,5 @@
 // 재귀: 중복의 가능성이 있으며 - 탑다운, 메모라이제이션: 탑다운, DP: 중복을 안함 - bottom up 방식
-// 페이징 FIFO, LRU, 행렬 돌리기
+// 페이징 FIFO, LRU, 행렬 돌리기, 텃밭 크기 확인하기
 
 function pagingCount(page, size, noneTime, existTime) {
     let runtime = 0;
@@ -86,3 +86,52 @@ function fact() {
     fact(n - 1) * n;
   }
 }
+
+function areaMaxCheck(area) {
+    let temp = area.map(v => v.join(' '));
+    let temp2 = temp.join('\n');
+    let str = temp2.replace(/1/g, '!').replace(/0/g, '1').replace(/!/g, '0');
+
+    let reversed = [];
+    for (let row of str.split('\n')) {
+        reversed.push(row.split(' ').map(v => Number(v)));
+    }
+
+    const height = reversed.length;
+    const width = reversed[0].length;
+    
+    let max = 0;
+    let x, y;
+
+    for (let i=1; i<height; i++) {
+        for (let j=1; j<width; j++) {
+            if (reversed[i][j] === 1) {
+                let min = reversed[i-1][j] > reversed[i][j-1] ? reversed[i][j-1] : reversed[i-1][j];
+                min = min > reversed[i-1][j-1] ? reversed[i-1][j-1] : min;
+                reversed[i][j] = min + 1;
+
+                if (max < reversed[i][j]) {
+                    max = reversed[i][j];
+                    x = j;
+                    y = i;
+                }
+            }
+        }
+    }
+
+    for (let i=y-(max-1); i<y+1; i++) {
+        for (let j=x-(max-1); j<x+1; j++) {
+            reversed[i][j] = '#';
+        }
+    }
+
+    console.log(reversed);
+}
+const area = [
+  [0, 0, 0, 0, 0],
+  [0, 1, 0, 0, 0],
+  [0, 1, 0, 0, 0],
+  [0, 0, 1, 0, 0],
+  [0, 0, 0, 1, 0],
+];
+console.log(areaMaxCheck(area));
