@@ -1,5 +1,6 @@
 // 재귀: 중복의 가능성이 있으며 - 탑다운, 메모라이제이션: 탑다운, DP: 중복을 안함 - bottom up 방식
-// 페이징 FIFO, LRU, 행렬 돌리기, 텃밭 크기 확인하기
+// 페이징 FIFO, LRU, 행렬 돌리기, 텃밭 크기 확인하기, 택배 결린 시간 체크
+// 징검다리 건너는 토끼 체크
 
 function pagingCount(page, size, noneTime, existTime) {
     let runtime = 0;
@@ -135,3 +136,49 @@ const area = [
   [0, 0, 0, 1, 0],
 ];
 console.log(areaMaxCheck(area));
+
+function delivery(n, l) {
+    let driver = Array(n).fill(0);
+    let answer = 0;
+
+    while (l.length) {
+        for (let i in driver) {
+            if (!driver[i]) {
+                driver[i] = l.shift();
+            }
+        }
+
+        driver = driver.map(v => v -= 1);
+        answer += 1;
+    }
+
+    return answer + Math.max.apply(null, driver);
+}
+console.log(delivery(3, [1,2,1,3,3,3]));
+
+function rabbitStone(rabbits, stones) {
+    let answer = [];
+    const width = stones.length;
+
+    rabbits.forEach(el => {
+        let point = -1;
+
+        while (point < width) {
+          point += el;
+
+          if (point >= width) {
+            answer.push("pass");
+            break;
+          }
+
+          if (stones[point]) {
+            stones[point] -= 1;
+          } else {
+            answer.push("fail");
+            break;
+          }
+        }
+    });
+    return answer;
+}
+console.log(rabbitStone([2, 1, 5], [1, 2, 1, 4, 5, 2]));
