@@ -182,3 +182,38 @@ function rabbitStone(rabbits, stones) {
     return answer;
 }
 console.log(rabbitStone([2, 1, 5], [1, 2, 1, 4, 5, 2]));
+
+function crashBall(plate, moves) {
+    let point = 0;
+    let stack = [0];
+
+    while (moves.length) {
+        const col = moves.shift()-1;
+        for (let idx in plate) {
+            if (plate[idx][col]) {
+                if (stack[stack.length - 1] === plate[idx][col]) {
+                    stack.pop();
+                    point += (plate[idx][col] ** 2);
+                } else {
+                    stack.push(plate[idx][col]);
+                }
+                plate[idx][col] = 0;
+                break;
+            }
+            if (!plate[plate.length-1][col]) {
+                point -= 1;
+                break;
+            }
+        }
+    }
+    return point;
+}
+const plate = [
+    [0,0,0,0],
+    [0,1,0,3],
+    [2,5,0,1],
+    [2,4,4,1],
+    [5,1,1,1],
+]
+const moves = [1,1,1,1,3,3,3];
+console.log(crashBall(plate, moves));
