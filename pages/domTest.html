@@ -43,6 +43,16 @@
     <br />
     <hr>
 
+    <div id="file-drag-drop">
+        <div id="file-box" class="dot-box" style="background-color: aquamarine; height: 100px;">
+            Please drop image file on this green box
+        </div>
+        <output id="result"></output>
+    </div>
+
+    <br />
+    <hr>
+
     <div id="custom-event">
         <div id="order-area">
             <div>
@@ -129,6 +139,30 @@
                 liEl.classList.add('selected');
             }
         }
+
+        const dropZone = document.getElementById('file-box');
+        dropZone.addEventListener('dragover', e => {
+            e.stopPropagation();
+            e.preventDefault();
+        });
+        dropZone.addEventListener('drop', e => {
+            e.stopPropagation();
+            e.preventDefault();
+            console.log(e);
+            const files = e.dataTransfer.files;
+            console.log(files);
+            Array.from(files).filter(file => file.type.match('image.*')).forEach(file => {
+                const reader = new FileReader();
+                reader.onload = e => {
+                    console.log(e);
+                    const imgEl = document.createElement('img');
+                    imgEl.src = e.target.result;
+                    imgEl.title = file.name;
+                    document.getElementById('result').appendChild(imgEl);
+                };
+                reader.readAsDataURL(file);
+            });
+        })
 
         document.getElementById('order-btn').addEventListener('click', e => {
             const alertEl = buildAlert('Error', 'Please login');
