@@ -14,6 +14,44 @@
     <title>DOM - TEST</title>
 </head>
 <body>
+    <div id="evenet-capture">        
+        <h2>To do it</h2>
+        <ul id="todo-list">
+            <li>
+                Study <button class="remove-button">x</button>
+            </li>
+            <li>
+                Shopping <button class="remove-button">x</button>
+            </li>
+            <li>
+                Working <button class="remove-button">x</button>
+            </li>
+        </ul>
+    </div>
+
+    <br/>
+    <hr>
+
+    <div id="history">
+        <ul class="user-list">
+            <li data-name="foo">foo</li>
+            <li data-name="bar">bar</li>
+            <li data-name="asd">asd</li>
+        </ul>
+    </div>
+
+    <br />
+    <hr>
+
+    <div id="custom-event">
+        <div id="order-area">
+            <div>
+                Item Info: Laptop
+            </div>
+            <button id="order-btn">Order</button>
+        </div>
+    </div>
+
     <script>
         class NotificationBar {
             constructor() {
@@ -37,14 +75,69 @@
                 this.barEl.innerHTML = message;
             }
         }
-
         const noti = new NotificationBar();
-        setTimeout(() => {
-            noti.show("TOP - TEST1");
-        }, 1000);
-        setTimeout(() => {
-            noti.show("BOTTOM - TEST2", "bottom");
-        }, 3000);
+        setTimeout(() => { noti.show("TOP - TEST1"); }, 1000);
+        setTimeout(() => { noti.show("BOTTOM - TEST2", "bottom"); }, 3000);
+
+        document.querySelector("ul#todo-list").addEventListener("click", (e) => {
+            if (e.target.className.indexOf("remove-button") < 0) {
+                return
+            }
+            const li = e.target.closest("li");
+            li.remove();
+        });
+
+        function buildAlert(title, message) {
+            const alert = document.createElement('div');
+            const id = Math.ceil(Math.random() * 1000);
+
+            alert.innerHTML = `<span class="close">&times;</span>
+                <h3>${title}</h3>
+                <p>${message}</p>`;
+            alert.id = id;
+            alert.querySelector('span.close').addEventListener('click', e => {
+                const closeEvt = new CustomEvent('close', {
+                    bubbles: true,
+                    detail: { id, message }
+                });
+                alert.dispatchEvent(closeEvt);
+            });
+            document.body.append(alert);
+            return alert;
+        }
+
+        const userList = document.querySelector('.user-list');
+        
+        userList.addEventListener('click', e => {
+            const liEl = e.target;
+            if (liEl.tagName === 'LI') {
+                const name = liEl.dataset.name;
+                select(userList, liEl);
+                history.pushState(name, null, name);
+            }
+        });
+
+        window.addEventListener('popstate', e => {
+            console.log(e);
+            const selectedUser = document.querySelector(`.user-list [data-name="${e.state}"]`);
+            select(userList, selectedUser);
+        })
+
+        function select(ulEl, liEl) {
+            Array.from(ulEl.children).forEach(v => v.classList.remove('selected'));
+            if (liEl) {
+                liEl.classList.add('selected');
+            }
+        }
+
+        document.getElementById('order-btn').addEventListener('click', e => {
+            const alertEl = buildAlert('Error', 'Please login');
+            alertEl.addEventListener('close', e => {
+                const { id } = e.detail;
+                const el = document.getElementById(id);
+                el.remove();
+            })
+        })
     </script>
 </body>
 </html>
