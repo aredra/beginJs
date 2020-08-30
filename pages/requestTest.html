@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="req"></div>
+    <script>
+        const reqEl = document.getElementById('req');
+
+        // xhr
+        function httpGet(url, successCallback, errorCallback) {
+            const req = new XMLHttpRequest();
+            req.onload = () => {
+                if (req.status >= 200 && req.status < 300) {
+                    successCallback(req.response);
+                } else {
+                    errorCallback(new Error(req.statusText));
+                }
+            }
+            req.onerror = errorCallback;
+            req.open('GET', url);
+            req.setRequestHeader('Accept', 'application/json');
+            req.send();
+        }
+
+        httpGet('url address', data => {
+            const res = JSON.parse(data);
+            reqEl.innerHTML = 'vlald';
+        }, error => {
+            alert(error);
+        });
+
+        // fetch
+        const reqPromise = fetch('url', {
+            headers: {Accept: 'application/json'},
+            method: 'GET'
+        });
+        reqPromise.then(res => {
+            if (res.status >= 200 & res.status < 300) {
+                return res.json();
+            } else {
+                return Promise.reject(new Error('Response has error'));
+            }
+        }).then(data => {
+            reqEl.innerHTML = 'ssss';
+        }).catch(error => alert(error));
+    </script>
+</body>
+</html>
