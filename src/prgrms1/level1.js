@@ -143,60 +143,48 @@ function strangerString(s) {
 
 //키패드 누르기
 function keypadHand(numbers, hand) {
-  const leftSide = [1, 4, 7];
-  const rightSide = [3, 6, 9];
+  const position = {
+    1: [0, 0],
+    2: [0, 1],
+    3: [0, 2],
+    4: [1, 0],
+    5: [1, 1],
+    6: [1, 2],
+    7: [2, 0],
+    8: [2, 1],
+    9: [2, 2],
+    "*": [3, 0],
+    0: [3, 1],
+    "#": [3, 2],
+  };
+  const rowIdx = 0;
+  const colIdx = 1;
 
-  const leftDiff = {
-    1: { 2: 1, 5: 1.5, 8: 2.5, 0: 3.5 },
-    4: { 2: 1.5, 5: 1, 8: 1.5, 0: 2.5 },
-    7: { 2: 2.5, 5: 1.5, 8: 1, 0: 1.5 },
-    2: { 2: 0, 5: 1, 8: 2, 0: 3 },
-    5: { 2: 1, 5: 0, 8: 1, 0: 2 },
-    8: { 2: 2, 5: 1, 8: 0, 0: 1 },
-    0: { 2: 3, 5: 2, 8: 1, 0: 0 },
-    "*": { 2: 4, 5: 2, 8: 2, 0: 1 },
-  };
-  const rightDiff = {
-    3: { 2: 1, 5: 1.5, 8: 2.5, 0: 3.5 },
-    6: { 2: 1.5, 5: 1, 8: 1.5, 0: 2.5 },
-    9: { 2: 2.5, 5: 1.5, 8: 1, 0: 1.5 },
-    2: { 2: 0, 5: 1, 8: 2, 0: 3 },
-    5: { 2: 1, 5: 0, 8: 1, 0: 2 },
-    8: { 2: 2, 5: 1, 8: 0, 0: 1 },
-    0: { 2: 3, 5: 2, 8: 1, 0: 0 },
-    "#": { 2: 4, 5: 2, 8: 2, 0: 1 },
-  };
   let left = "*";
   let right = "#";
   let answer = "";
 
   numbers.forEach((num) => {
-    if (leftSide.includes(num)) {
+    if (num % 3 === 1) {
       left = num;
       answer += "L";
-    } else if (rightSide.includes(num)) {
+    } else if (num && num % 3 === 0) {
       right = num;
       answer += "R";
     } else {
-      const leftDistance = leftDiff[left][num];
-      const rightDistance = rightDiff[right][num];
-      console.log(leftDistance, rightDistance);
-      if (leftDistance < rightDistance) {
-        left = num;
-        answer += "L";
-      } else if (rightDistance < leftDistance) {
-        right = num;
-        answer += "R";
+      const leftDistance =
+        Math.abs(position[left][rowIdx] - position[num][rowIdx]) +
+        Math.abs(position[left][colIdx] - position[num][colIdx]);
+      const rightDistance =
+        Math.abs(position[right][rowIdx] - position[num][rowIdx]) +
+        Math.abs(position[right][colIdx] - position[num][colIdx]);
+
+      if (leftDistance === rightDistance) {
+        answer += hand === "left" ? "L" : "R";
+        hand === "left" ? (left = num) : (right = num);
       } else {
-        hand === "left"
-          ? (() => {
-              left = num;
-              answer += "L";
-            })()
-          : (() => {
-              right = num;
-              answer += "R";
-            })();
+        answer += leftDistance < rightDistance ? "L" : "R";
+        leftDistance < rightDistance ? (left = num) : (right = num);
       }
     }
     console.log(num, left, right, answer);
@@ -204,5 +192,3 @@ function keypadHand(numbers, hand) {
 
   return answer;
 }
-
-keypadHand([1, 3, 4, 5, 8, 2, 1, 4, 5, 9, 5], "right");
