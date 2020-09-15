@@ -192,3 +192,42 @@ function keypadHand(numbers, hand) {
 
   return answer;
 }
+
+// 최소공배수, 최대공약수
+function lcmAndGcd(n, m) {
+  const gcd = (a, b) => (b ? gcd(b, a % b) : a);
+  const lcm = (n * m) / gcd(n, m);
+
+  return [gcd(n, m), lcm];
+}
+
+//콜라츠 추측
+function collatzConjecture(num) {
+  let answer = 0;
+  while (num !== 1 && answer < 501) {
+    if (num % 2 === 0) {
+      num /= 2;
+      answer += 1;
+    } else {
+      num *= 3;
+      num += 1;
+      answer += 1;
+    }
+  }
+  return answer === 501 ? -1 : answer;
+}
+
+// 예산으로 최대 지원부서 구하기
+function maxDept(d, budget) {
+  let answer = 0;
+
+  d.sort((a, b) => a - b).some((v) => {
+    budget -= v;
+    if (budget < 0) {
+      return true;
+    }
+    answer += 1;
+  });
+
+  return answer;
+}
