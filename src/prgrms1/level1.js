@@ -231,3 +231,28 @@ function maxDept(d, budget) {
 
   return answer;
 }
+
+// 보물지도
+function treasureMap(n, arr1, arr2) {
+  const biArr1 = arr1.map((el) => {
+    return el.toString(2).padStart(n, "0");
+  });
+  const biArr2 = arr2.map((el) => {
+    return el.toString(2).padStart(n, "0");
+  });
+
+  return biArr1.map((el, idx) => {
+    const r1 = el
+      .split("")
+      .map((v, strIdx) => {
+        if (!Number(v)) {
+          return parseInt(biArr2[idx][strIdx], 10) ? "#" : " ";
+        }
+        return "#";
+      })
+      .join("");
+    return r1;
+  });
+}
+
+//
