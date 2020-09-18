@@ -255,4 +255,49 @@ function treasureMap(n, arr1, arr2) {
   });
 }
 
-//
+(function () {
+  const part = [
+    { name: "FE", value: 3 },
+    { name: "BE", value: 2 },
+    { name: "iOS", value: 1 },
+    { name: "Android", value: 0 },
+  ];
+
+  const text = part
+    .filter((v) => v && v.value > 0)
+    .sort((a, b) => {
+      return b.value - a.value;
+    })
+    .reduce((acc, el, idx) => {
+      return (acc += `${idx + 1}) ${el.name} 개발\n`);
+    }, "");
+  console.log(text);
+  return text;
+})();
+
+// 각 항목에 대한 동일한 interest 값은 있을 수 없다.
+const subjects = [];
+
+const favoriteSubjects = (subjects) => {
+  const bestSixSubjects = [];
+
+  subjects.forEach((subject) => {
+    if (bestSixSubjects.length >= 6) {
+      bestSixSubjects
+        .sort((a, b) => {
+          return b.interest - a.interest;
+        })
+        .pop();
+    }
+    bestSixSubjects.push(subject);
+  });
+
+  const text =
+    bestSixSubjects.reduce((acc, el, idx) => {
+      return (acc += `${el.name} ${el.grade}${
+        idx === bestSixSubjects.length - 1 ? "" : ", "
+      }`);
+    }, "[") + "]";
+
+  return text;
+};
