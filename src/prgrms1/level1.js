@@ -193,24 +193,111 @@ function keypadHand(numbers, hand) {
   return answer;
 }
 
+// 최소공배수, 최대공약수
+function lcmAndGcd(n, m) {
+  const gcd = (a, b) => (b ? gcd(b, a % b) : a);
+  const lcm = (n * m) / gcd(n, m);
+
+  return [gcd(n, m), lcm];
+}
+
+//콜라츠 추측
+function collatzConjecture(num) {
+  let answer = 0;
+  while (num !== 1 && answer < 501) {
+    if (num % 2 === 0) {
+      num /= 2;
+      answer += 1;
+    } else {
+      num *= 3;
+      num += 1;
+      answer += 1;
+    }
+  }
+  return answer === 501 ? -1 : answer;
+}
+
+// 예산으로 최대 지원부서 구하기
+function maxDept(d, budget) {
+  let answer = 0;
+
+  d.sort((a, b) => a - b).some((v) => {
+    budget -= v;
+    if (budget < 0) {
+      return true;
+    }
+    answer += 1;
+  });
+
+  return answer;
+}
+
 // 보물지도
 function treasureMap(n, arr1, arr2) {
-  const biArr1 = arr1.map(el => {
-    return el.toString(2).padStart(n, '0');
+  const biArr1 = arr1.map((el) => {
+    return el.toString(2).padStart(n, "0");
   });
   const biArr2 = arr2.map((el) => {
-    return el.toString(2).padStart(n, '0');
+    return el.toString(2).padStart(n, "0");
   });
 
   return biArr1.map((el, idx) => {
-    const r1 = el.split("").map((v, strIdx) => {
-      if (!Number(v)) {
-        return parseInt(biArr2[idx][strIdx], 10) ? '#' : ' ';
-      }
-      return '#'
-    }).join('');
+    const r1 = el
+      .split("")
+      .map((v, strIdx) => {
+        if (!Number(v)) {
+          return parseInt(biArr2[idx][strIdx], 10) ? "#" : " ";
+        }
+        return "#";
+      })
+      .join("");
     return r1;
   });
 }
 
-//
+(function () {
+  const part = [
+    { name: "FE", value: 3 },
+    { name: "BE", value: 2 },
+    { name: "iOS", value: 1 },
+    { name: "Android", value: 0 },
+  ];
+
+  const text = part
+    .filter((v) => v && v.value > 0)
+    .sort((a, b) => {
+      return b.value - a.value;
+    })
+    .reduce((acc, el, idx) => {
+      return (acc += `${idx + 1}) ${el.name} 개발\n`);
+    }, "");
+  console.log(text);
+  return text;
+})();
+
+// 각 항목에 대한 동일한 interest 값은 있을 수 없다.
+const subjects = [];
+
+const favoriteSubjects = (subjects) => {
+  const bestSixSubjects = [];
+
+  subjects.forEach((subject) => {
+    if (bestSixSubjects.length >= 6) {
+      bestSixSubjects
+        .sort((a, b) => {
+          return b.interest - a.interest;
+        })
+        .pop();
+    }
+    bestSixSubjects.push(subject);
+  });
+
+  const text =
+    bestSixSubjects.reduce((acc, el, idx) => {
+      return (acc += `${el.name} ${el.grade}${
+        idx === bestSixSubjects.length - 1 ? "" : ", "
+      }`);
+    }, "[") + "]";
+
+  return text;
+};
