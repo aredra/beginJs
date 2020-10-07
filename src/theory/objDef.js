@@ -124,3 +124,8 @@ const fibonacci = (function() {
 })();
 
 console.log(fibonacci(5));
+
+const identity = field => value => dog => dog[field] === value;
+const colorCheck = identity('색상');
+
+getDogNames(dogs, colorCheck('갈색'));
