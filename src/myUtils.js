@@ -26,3 +26,19 @@ const daysFromNow = (n) => {
   d.setDate(d.getDate() + Math.abs(n));
   return d.toISOString().split("T")[0];
 };
+
+// 형제 element 가져오기
+const getSiblings = (el) =>
+  [...el.parentNode.childNodes].filter((node) => node !== el);
+
+// 날짜 유효성 검증  
+const isDateValid = (...val) => !isNaN(new Date(...val).valueOf());
+
+// 반복 Generator
+const repeatGenerator = function* (val) {
+  let v = val;
+  while (true) {
+    let newV = yield v;
+    if (newV !== undefined) v = newV;
+  }
+};
