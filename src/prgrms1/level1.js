@@ -301,3 +301,48 @@ const favoriteSubjects = (subjects) => {
 
   return text;
 };
+
+// 실패율
+function failurePercent(N, stages) {
+  let tempStages = stages;
+  const failureArr = [];
+
+  for (let i = 1; i <= N; i++) {
+    const currStagesCount = tempStages.filter((v) => v === i).length;
+
+    failureArr.push({
+      stageNo: i,
+      percent: currStagesCount / tempStages.length,
+    });
+    tempStages = tempStages.filter((v) => v > i);
+  }
+
+  return failureArr
+    .sort((a, b) => {
+      return b.percent - a.percent;
+    })
+    .map((v) => v.stageNo);
+}
+
+//dart
+function solution(dartResult) {
+  const bonus = {'S': 1, 'D': 2, 'T': 3};
+  let darts = dartResult.match(/\d.?\D/g);
+
+  for (let i = 0; i < darts.length; i++) {
+      let split = darts[i].match(/(\d{1,})([SDT])([*#])?/);
+      let score = Math.pow(split[1], bonus[split[2]]);
+
+      if (split[3] !== undefined) {
+          if (split[3] === '*') {
+              score *= 2;
+
+              if (i > 0) darts[i - 1] *= 2;
+          } else score *= -1;
+      }
+
+      darts[i] = score;
+  }
+
+  return darts.reduce((a, b) => a + b);
+}
