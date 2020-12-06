@@ -343,6 +343,6 @@ function solution(dartResult) {
 
       darts[i] = score;
   }
-
+  
   return darts.reduce((a, b) => a + b);
 }
