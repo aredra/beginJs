@@ -40,7 +40,7 @@ document.querySelector("#down").addEventListener("click", () => {
   count.number--;
 });
 
-// Debouncing
+// Debouncing 일정 시간 동안 입력이 없을 경우
 let timer;
 document.querySelector("#input").addEventListener("input", e => {
     if (timer) {
@@ -53,7 +53,7 @@ document.querySelector("#input").addEventListener("input", e => {
     }, 1000);
 });
 
-// Throttling
+// Throttling 일정 주기로 계속 호출
 document.getElementById("inputText").addEventListener("input", function(e) {
     if (!timer) {
         timer = setTimeout(() => {
@@ -129,3 +129,25 @@ const identity = field => value => dog => dog[field] === value;
 const colorCheck = identity('색상');
 
 getDogNames(dogs, colorCheck('갈색'));
+
+const book = {
+    myPoint: 100,
+    setEvent() {
+        const node = document.getElementById('point');
+        node.onclick = this.show.bind(book, node);
+    },
+    show(node, event) {
+        console.log(node.textContent);
+        console.log(this.myPoint);
+    }
+};
+book.setEvent();
+
+const closureTest = ((function() {
+    let point = 100;
+    const getPoint = function(param) {
+        return point + param;
+    }
+    return getPoint;
+})());
+console.log(closureTest(100));
