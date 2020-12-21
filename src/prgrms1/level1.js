@@ -324,8 +324,8 @@ function failurePercent(N, stages) {
     .map((v) => v.stageNo);
 }
 
-//dart
-function solution(dartResult) {
+//dart - 정규식이 메인
+function dartSolution(dartResult) {
   const bonus = {'S': 1, 'D': 2, 'T': 3};
   let darts = dartResult.match(/\d.?\D/g);
 
@@ -345,4 +345,35 @@ function solution(dartResult) {
   }
   
   return darts.reduce((a, b) => a + b);
+}
+
+// 진법
+const numberCovert1 = (n) => {
+  return parseInt([...n.toString(3)].reverse().join(''), 3);
+}
+
+function numberCovert2(n) {
+  const threeString = convertNum(n, 3);
+  const reverseThree = threeString.split('').reverse().join('');
+  return reverseTen(reverseThree, 3);
+}
+
+function convertNum(n, unit) {
+  let result = '';
+  if (n < unit) return result + n;
+  return result + convertNum(parseInt((n / unit), 10), unit) + (n % unit);
+}
+
+function reverseTen(n, unit) {
+  const num = n.split('');
+  let result = 0;
+  
+  num.forEach((el, index) => {
+      if (+el !== 0) {
+          const temp = Math.pow(unit, (num.length - 1) - index);
+          result += temp * el;
+      }
+  });
+  
+  return result;
 }
