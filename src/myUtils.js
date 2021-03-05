@@ -1,3 +1,9 @@
+/**
+ *
+ * 출처: https://www.30secondsofcode.org/js/p/1
+ *
+ */
+
 // 날짜 기간 차이 구하기
 const formatDuration = (ms) => {
   if (ms < 0) ms = -ms;
@@ -31,7 +37,7 @@ const daysFromNow = (n) => {
 const getSiblings = (el) =>
   [...el.parentNode.childNodes].filter((node) => node !== el);
 
-// 날짜 유효성 검증  
+// 날짜 유효성 검증
 const isDateValid = (...val) => !isNaN(new Date(...val).valueOf());
 
 // 반복 Generator
@@ -125,17 +131,58 @@ setInterval(function () {
     didScroll = false;
   }
 }, 250);
-function hasScrolled(){
-    var nowScrollTop = window.scrollY;
-    if(Math.abs(lastScrollTop - nowScrollTop) <= delta){
-        return;
+function hasScrolled() {
+  var nowScrollTop = window.scrollY;
+  if (Math.abs(lastScrollTop - nowScrollTop) <= delta) {
+    return;
+  }
+  if (nowScrollTop > lastScrollTop && nowScrollTop > fixBoxHeight) {
+    //Scroll down
+  } else {
+    if (nowScrollTop + window.innerHeight < document.body.offsetHeight) {
+      //Scroll up
     }
-    if(nowScrollTop > lastScrollTop && nowScrollTop > fixBoxHeight){
-        //Scroll down
-    }else{
-        if(nowScrollTop + window.innerHeight < document.body.offsetHeight){
-        	//Scroll up
-        }
-    }
-    lastScrollTop = nowScrollTop;
+  }
+  lastScrollTop = nowScrollTop;
 }
+
+// Memoization
+class MyObject {
+  constructor(data) {
+    this.data = data;
+    this.data[this.data.length - 2] = { value: "Non-empty" };
+  }
+
+  firstNonEmptyItem() {
+    return this.data.find((v) => !!v.value);
+  }
+
+  firstNonEmptyItemMemo() {
+    if (!this.firstNonEmpty)
+      this.firstNonEmpty = this.data.find((v) => !!v.value);
+    return this.firstNonEmpty;
+  }
+}
+
+const myObject = new MyObject(Array(2000).fill({ value: null }));
+
+for (let i = 0; i < 100; i++) myObject.firstNonEmptyItem(); // ~4000ms
+for (let i = 0; i < 100; i++) myObject.firstNonEmptyItemMemo(); // ~70ms
+
+// Use Proxy object
+const memoize = (fn) =>
+  new Proxy(fn, {
+    cache: new Map(),
+    apply(target, thisArg, argsList) {
+      let cacheKey = argsList.toString();
+      if (!this.cache.has(cacheKey))
+        this.cache.set(cacheKey, target.apply(thisArg, argsList));
+      return this.cache.get(cacheKey);
+    },
+  });
+
+const fibonacci = (n) => (n <= 1 ? 1 : fibonacci(n - 1) + fibonacci(n - 2));
+const memoizedFibonacci = memoize(fibonacci);
+
+for (let i = 0; i < 100; i++) fibonacci(30); // ~5000ms
+for (let i = 0; i < 100; i++) memoizedFibonacci(30); // ~50ms
