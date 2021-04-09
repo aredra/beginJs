@@ -1,0 +1,76 @@
+* {
+  outline: 1px solid rgba(255, 0, 0, .2);
+
+  :hover {
+    outline: 1px solid rgba(255, 0, 0, 0.6);
+  }
+}
+
+* * {
+  outline: 1px solid rgba(0, 255, 0, .2);
+
+  :hover {
+    outline: 1px solid rgba(0, 255, 0, 0.6);
+  }
+}
+
+* * * {
+  outline: 1px solid rgba(0, 0, 255, .2);
+
+  :hover {
+    outline: 1px solid rgba(0, 0, 255, 0.6);
+  }
+}
+
+* * * * {
+  outline: 1px solid rgba(255, 0, 255, .2);
+
+  :hover {
+    outline: 1px solid rgba(255, 0, 0, 0.6);
+  }
+}
+
+* * * * * {
+  outline: 1px solid rgba(0, 255, 255, .2);
+
+  :hover {
+    outline: 1px solid rgba(0, 255, 0, 0.6);
+  }
+}
+
+* * * * * * {
+  outline: 1px solid rgba(255, 255, 0, .2);
+
+  :hover {
+    outline: 1px solid rgba(0, 0, 255, 0.6);
+  }
+}
+
+* * * * * * * {
+  outline: 1px solid rgba(255, 0, 0, .2);
+
+  :hover {
+    outline: 1px solid rgba(255, 0, 0, 0.6);
+  }
+}
+
+* * * * * * * * {
+  outline: 1px solid rgba(0, 255, 0, .2);
+
+  :hover {
+    outline: 1px solid rgba(0, 255, 0, 0.6);
+  }
+}
+
+* * * * * * * * * {
+  outline: 1px solid rgba(0, 0, 255, .2);
+
+  :hover {
+    outline: 1px solid rgba(0, 0, 255, 0.6);
+  }
+}
+
+html * {
+  background: rgba(255, 0, 0, .1);
+  box-shadow: 0 0 0 1px red;
+}
